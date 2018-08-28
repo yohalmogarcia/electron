@@ -1,0 +1,14 @@
+{
+  "name": "app-video",
+  "version": "1.0.0",
+  "description": "app de video aprende electron en 60 min",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Yohalmo Garcia",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^2.0.8"
+  }
+}
