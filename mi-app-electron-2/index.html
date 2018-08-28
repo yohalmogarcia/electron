@@ -1,18 +1,6 @@
-<!--
-<!DOCTYPE html>
-  <html>
-    <head>
+
       <meta charset="UTF-8">
-      <title>Hello World!</title>
-    </head>
-    <body>
-      <h1>Hello World!</h1>
-      Estamos usando node <script>document.write(process.versions.node)</script>,
-      Chrome <script>document.write(process.versions.chrome)</script>,
-      y Electron <script>document.write(process.versions.electron)</script>.
-    </body>
-  </html>
--->
+    
 
   <style>
 body {
@@ -37,10 +25,34 @@ h2 {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#link-left{
+  color:white;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 20px;
+  left: 25%;
+  transform: translateX(-25%);
+  font-size: 14px;
+  text-decoration: none;
+}
+#link-right{
+  color:white;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 20px;
+  left: 75%;
+  transform: translateX(-25%);
+  font-size: 14px;
   text-decoration: none;
 }
 </style>
 
-<h2>Hello World!</h2>
-<a id="close" href="javascript:window.close()">Close this Window</a>
+<h2>Bienvenido a ElectronJS!</h2>
+
+  <a id="link-left" href="pagina2.html">¿Que es ElectronJS?</a>
+  <a id="link-right" href="pagina3.html">Es más fácil de lo que piensas</a>
+  <a id="close" href="javascript:window.close()">Cerrar</a>
