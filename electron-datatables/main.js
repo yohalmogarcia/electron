@@ -1,5 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 
+
   
   // Mantén una referencia global del objeto window, si no lo haces, la ventana 
   // se cerrará automáticamente cuando el objeto JavaScript sea eliminado por el recolector de basura.
@@ -12,14 +13,11 @@ const {app, BrowserWindow} = require('electron')
     // y carga el archivo index.html de la aplicación.
     win.loadFile('index.html')
   
-    // Abre las herramientas de desarrollo (DevTools).
-    win.webContents.openDevTools()
+    
+    //win.webContents.openDevTools()
   
     // Emitido cuando la ventana es cerrada.
-    win.on('closed', () => {
-      // Elimina la referencia al objeto window, normalmente  guardarías las ventanas
-      // en un vector si tu aplicación soporta múltiples ventanas, este es el momento
-      // en el que deberías borrar el elemento correspondiente.
+    win.on('closed', () => {      
       win = null
     })
   }
@@ -46,5 +44,3 @@ const {app, BrowserWindow} = require('electron')
     }
   })
   
-  // En este archivo puedes incluir el resto del código del proceso principal de
-  // tu aplicación. También puedes ponerlos en archivos separados y requerirlos aquí.
