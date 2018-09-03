@@ -1,0 +1,15 @@
+{
+	"data": [{
+			"cod": 1,
+			"nombre_marca": "toyota"
+		},
+		{
+			"cod": 2,
+			"nombre_marca": "audi"
+		},
+		{
+			"cod": 3,
+			"nombre_marca": "BMW"
+		}
+	]
+}
