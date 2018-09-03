@@ -67,6 +67,7 @@
         var myPara2 = document.createElement('p');
         var myPara3 = document.createElement('p');
         var myList= document.createElement('ul');
+        var select = document.createElement('select');
 
         myH2.textContent= heroes[i].name;
         myPara1.textContent = 'Secrete identity: '+heroes[i].secretidentity;
@@ -76,8 +77,13 @@
         var superPowers = heroes[i].powers;
         for(var j=0; j<superPowers.length; j++){
           var listItem = document.createElement('li');
+          var option = document.createElement('option');
           listItem.textContent=superPowers[j];
           myList.appendChild(listItem);
+          //select
+          option.textContent=superPowers[j];
+          select.appendChild(option);
+
         }
         
         myArticle.appendChild(myH2);
@@ -87,6 +93,7 @@
         myArticle.appendChild(myList);
 
         section.appendChild(myArticle);
+        section.appendChild(select);
 
       }
     }
