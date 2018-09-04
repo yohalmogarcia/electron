@@ -1,7 +1,10 @@
-{
-	"data":[
-		{"codigo":"1","nombreModelo":"Modelo1"},
-		{"codigo":"2","nombreModelo":"Modelo2"}
-	]
-}
-
+[
+  {
+    "cod": 1,
+    "nombre": "GT500"
+  },
+  {
+    "cod": 2,
+    "nombre": "Corola"
+  }
+]

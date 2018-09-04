@@ -2,6 +2,16 @@ const fs = require('fs');
 const $ = require('jquery');
 const dt= require('datatables.net')();
 
+//para poder leer el archivo data.json
+const path = require('path');
+
+const fileDataJson="data.json";// se asigna el archivo a leer= data.json
+const filepathDataJson=`${path.resolve('.')}/${fileDataJson}`;//se completa la url con el nombre del archivo
+//const dataDataJson = fs.readFileSync(filepathDataJson,'utf-8');//se obtiene el archivo data.json
+
+
+
+
 let rawdata = fs.readFileSync('marcas.json');//se adquieren los datos hexadecimales del archivo  
 let jsonObj = JSON.parse(rawdata);  //se convierten los datos hexadecimales a json
 var mar = jsonObj.data;
@@ -16,40 +26,10 @@ for(var i=0; i< mar.length;i++){
 	select.appendChild(option);	
 }
 
-//funcion para mostrar la tabla
-function verTabla(){
-	$('#example').DataTable( {
-		"ajax":"marcas.json",		
-        "columns"     :     [  
-                {     "data"     :     "cod"     },  
-                {     "data"     :     "nombre_marca"}                 
-           ]  
-    } );
-}
-
-function tablaModelos(){
-	const path = require('path');
-
-	const fileName="data.json";
-	const filepath=`${path.resolve('.')}/${fileName}`;
-	const data = fs.readFileSync(filepath,'utf-8');
-
-	$("#tabla-modelos").html("");
-
-	$('#tabla-modelos').DataTable( {
-		destroy:true,
-		data:JSON.parse(data),
-		columns:[
-			{data: 'cod'},
-			{data: 'nombre'}
-		]
-    } );
-}
-
 //sucede cuando el documento carga
 $(document).ready(function(){
 
-	tablaModelos();
+	//tablaModelos();
 	
 	$("#form-modelos").submit(function(e){
 		e.preventDefault();
@@ -74,30 +54,77 @@ $(document).ready(function(){
 	$("#btn-tabla-modelos").click(function(e){
 		tablaModelos();
 	});
+
+
     
 });//fin de document.ready
 
+
+//funcion para mostrar la tabla de marcas
+function verTabla(){
+	var miTabla =  $('#example').DataTable( {
+		"ajax":"marcas.json",		
+        "columns"     :     [  
+                {     "data"     :     "cod"     },  
+                {     "data"     :     "nombre_marca"}                 
+           ]  
+    } );
+
+    $("#example").on('click','tbody td', function(){
+    	miTabla.cell(this).edit();
+    });
+}
+
+//funcion para mostrar la tabla de modelos
+function tablaModelos(){
+	const path = require('path');
+
+	const fileName="modelos.json";
+	const filepath=`${path.resolve('.')}/${fileName}`;
+	const data = fs.readFileSync(filepath,'utf-8');
+
+	var items=[];
+	items=JSON.parse(data);
+	if(items.length>0){
+		$('#tabla-modelos').DataTable( {
+		destroy:true,
+		data:JSON.parse(data),
+		columns:[
+			{data: 'cod'},
+			{data: 'nombre'}
+		]
+    } );
+	}
+	
+}
 
 //agregando nuevos registros al json
 function reescribirJSON(){
 	const path = require('path');
 
-	const fileName="data.json";
+	const fileName="modelos.json";
 	const filepath=`${path.resolve('.')}/${fileName}`;
 
-	var codigo_modelo=document.getElementById("codigo-modelo").value;
+	var codigo_modelo=0;
 	var nombre_modelo = document.getElementById("nombre-modelo").value;
 
-	var items =[];
+	var items =[];	
+
 	var data;
 
 	try{
 		//si el fichero existe
 		const content = fs.readFileSync(filepath,'utf-8');
-		console.log("content: "+content)
-		items=JSON.parse(content);				
+		items=JSON.parse(content);	
+		if(items.length<=0){
+			codigo_modelo=1;
+		}else{
+			var datoUltimo = items[items.length-1].cod;
+			codigo_modelo=datoUltimo+1;
+		}			
 	}catch(e){
 		//si el fichero no existe
+		codigo_modelo=1;
 		fs.openSync(filepath,'w');
 	}
 
