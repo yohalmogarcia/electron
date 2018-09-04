@@ -1,79 +1,34 @@
-const fs = require('fs');
+//todos estos require hay q instalarlos con npm en el proyecto
+const fs = require('fs'); 
 const $ = require('jquery');
 const dt= require('datatables.net')();
 
-//para poder leer el archivo data.json
+//para poder leer el archivo modelos.json
 const path = require('path');
-
-const fileDataJson="data.json";// se asigna el archivo a leer= data.json
+const fileDataJson="modelos.json";// se asigna el archivo a leer= data.json
 const filepathDataJson=`${path.resolve('.')}/${fileDataJson}`;//se completa la url con el nombre del archivo
 //const dataDataJson = fs.readFileSync(filepathDataJson,'utf-8');//se obtiene el archivo data.json
 
+//esta variable la ocupare para modificar el modelo
+var codigoSeleccionad=0;
 
-
-
-let rawdata = fs.readFileSync('marcas.json');//se adquieren los datos hexadecimales del archivo  
-let jsonObj = JSON.parse(rawdata);  //se convierten los datos hexadecimales a json
-var mar = jsonObj.data;
-
-//mostrando las marcas en un select
-var select = document.getElementById('marca');
-
-for(var i=0; i< mar.length;i++){
-	var option=document.createElement('option');
-	option.textContent=mar[i].nombre_marca;
-	option.setAttribute("value",mar[i].cod)
-	select.appendChild(option);	
-}
-
-//sucede cuando el documento carga
-$(document).ready(function(){
-
-	//tablaModelos();
-	
-	$("#form-modelos").submit(function(e){
-		e.preventDefault();
+//esto sucede cuando hago clic en el boton de guardar o modificar modelo
+$("#btn-modelo").click(function(e){
+		//si el boton tiene un texto de Guardar se agrega un nuevo modelo
+		if(document.getElementById("btn-modelo").innerHTML == 'Guardar'){
+			reescribirJSON();	
+		}else{
+			// sino se modifica el modelo
+			modificarModelo();
+		}
+		
 	});
 
-
-    //formulario
-	$('#guardar').click(function(e){
-				
-	});
-
-	//al hacer clic en el boton se carga la tabla
-	$('#btn').click(function(e){
-		verTabla();
-	});
-
-	$("#btn-modelo").click(function(e){
-		reescribirJSON();
-	});
-
-	//ver tabla modelos
+	//esto sucede al precionar el boton ver tabla
 	$("#btn-tabla-modelos").click(function(e){
-		tablaModelos();
+		tablaModelos();//manda a llamar a la funcion para ver la tabla
 	});
 
-
-    
-});//fin de document.ready
-
-
-//funcion para mostrar la tabla de marcas
-function verTabla(){
-	var miTabla =  $('#example').DataTable( {
-		"ajax":"marcas.json",		
-        "columns"     :     [  
-                {     "data"     :     "cod"     },  
-                {     "data"     :     "nombre_marca"}                 
-           ]  
-    } );
-
-    $("#example").on('click','tbody td', function(){
-    	miTabla.cell(this).edit();
-    });
-}
 
 //funcion para mostrar la tabla de modelos
 function tablaModelos(){
@@ -85,11 +40,11 @@ function tablaModelos(){
 
 	var items=[];
 	items=JSON.parse(data);
-	if(items.length>0){
+	if(items.length>0){//solo si el archivo tiene datos mostrara la tabla		
 		$('#tabla-modelos').DataTable( {
 		destroy:true,
 		data:JSON.parse(data),
-		columns:[
+		columns:[			
 			{data: 'cod'},
 			{data: 'nombre'}
 		]
@@ -97,6 +52,22 @@ function tablaModelos(){
 	}
 	
 }
+
+//para seleccionar un modelo y que se muestre en el input para modificar
+$("#tabla-modelos").on('click','tbody td.sorting_1',function(){
+	codigoSeleccionado= this.innerHTML;//guardo el codigo seleccionado desde la tabla
+	var nombreModelo;
+	const dataDataJson = fs.readFileSync(filepathDataJson,'utf-8');
+	var items = JSON.parse(dataDataJson);
+	for(var i=0; i<items.length;i++){
+		if(items[i].cod == codigoSeleccionado){//busco el codigo en el json
+			nombreModelo=items[i].nombre;//al encontrarlo guardo el nombre del modelo seleccionado
+		}
+	}
+	
+	document.getElementById("nombre-modelo").value=nombreModelo;// pongo el nombre del modelo en el input
+	document.getElementById("btn-modelo").innerHTML="Modificar";//modifico el texto del boton
+});
 
 //agregando nuevos registros al json
 function reescribirJSON(){
@@ -120,7 +91,7 @@ function reescribirJSON(){
 			codigo_modelo=1;
 		}else{
 			var datoUltimo = items[items.length-1].cod;
-			codigo_modelo=datoUltimo+1;
+			codigo_modelo=datoUltimo+1;//aqui genero el codigo automaticamente
 		}			
 	}catch(e){
 		//si el fichero no existe
@@ -139,61 +110,34 @@ function reescribirJSON(){
 }
 
 
-/*
-function agregarAJSON(){
-	var jsonData;
-	fs.readFileSync('modelos.json','utf-8',function(err,data){
-		alert("Hola");
-		if(err){
-			console.log(err);
-		}else{
+//para modificar un elemento
+function modificarModelo(){
+	const path = require('path');
 
-			var codigo_modelo=document.getElementById("codigo-modelo").value;
-			var nombre_modelo = document.getElementById("nombre-modelo").value;
+	const fileName="modelos.json";
+	const filepath=`${path.resolve('.')}/${fileName}`;
 
-			jsonData=JSON.parse(data);
-			console.log("jsonData: "+jsonData);
-			var modelos = {
-				"codigo":codigo_modelo,
-				"nombreModelo":nombre_modelo
-			}
-			jsonData.push(modelos);
-			console.log("jsonData 2: "+jsonData);
-			var newdata = JSON.stringify(jsonData);
-			fs.writeFile('modelos.json', newdata,'utf-8', function(err){
-				if(err) throw err;
-				console.log("Exito!");
-			});
-		}
-	});//se adquieren los datos hexadecimales del archivo  
-
-*/
-/*
-
-
-	var jsonObj = JSON.parse(rawdata);  //se convierten los datos hexadecimales a json
-	var mod = jsonObj.data;
-	console.log("mod: "+mod);
-
-	var codigo_modelo=document.getElementById("codigo-modelo").value;
+	var codigo_modelo=0;
 	var nombre_modelo = document.getElementById("nombre-modelo").value;
-	var modelos = {
-		"codigo":codigo_modelo,
-		"nombreModelo":nombre_modelo
+
+	var items =[];	
+
+	var data;
+
+	const content = fs.readFileSync(filepath,'utf-8');
+	items=JSON.parse(content);	
+	
+	for(var i=0; i<items.length; i++){
+		if(items[i].cod==codigoSeleccionado){
+			items[i].nombre=nombre_modelo;
+		}		
 	}
 
-	jsonObj.push(modelos);
-	var data = JSON.stringify(jsonObj);
+	fs.writeFileSync(filepath,JSON.stringify(items,null,2));
 
-	console.log("data: "+data)
-
-	data+=mod;
-	console.log("data+modelos: "+data);
-	//fs.writeFileSync('modelos.json',data);
-
-	
+	tablaModelos();
 }
-*/
+
 
 
 

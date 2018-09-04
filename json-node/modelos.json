@@ -6,5 +6,13 @@
   {
     "cod": 2,
     "nombre": "Corola"
+  },
+  {
+    "cod": 3,
+    "nombre": "Supra"
+  },
+  {
+    "cod": 4,
+    "nombre": "Auris"
   }
 ]
