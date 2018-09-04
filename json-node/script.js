@@ -27,8 +27,29 @@ function verTabla(){
     } );
 }
 
+function tablaModelos(){
+	const path = require('path');
+
+	const fileName="data.json";
+	const filepath=`${path.resolve('.')}/${fileName}`;
+	const data = fs.readFileSync(filepath,'utf-8');
+
+	$("#tabla-modelos").html("");
+
+	$('#tabla-modelos').DataTable( {
+		destroy:true,
+		data:JSON.parse(data),
+		columns:[
+			{data: 'cod'},
+			{data: 'nombre'}
+		]
+    } );
+}
+
 //sucede cuando el documento carga
 $(document).ready(function(){
+
+	tablaModelos();
 	
 	$("#form-modelos").submit(function(e){
 		e.preventDefault();
@@ -46,11 +67,52 @@ $(document).ready(function(){
 	});
 
 	$("#btn-modelo").click(function(e){
-		agregarAJSON();
+		reescribirJSON();
+	});
+
+	//ver tabla modelos
+	$("#btn-tabla-modelos").click(function(e){
+		tablaModelos();
 	});
     
 });//fin de document.ready
 
+
+//agregando nuevos registros al json
+function reescribirJSON(){
+	const path = require('path');
+
+	const fileName="data.json";
+	const filepath=`${path.resolve('.')}/${fileName}`;
+
+	var codigo_modelo=document.getElementById("codigo-modelo").value;
+	var nombre_modelo = document.getElementById("nombre-modelo").value;
+
+	var items =[];
+	var data;
+
+	try{
+		//si el fichero existe
+		const content = fs.readFileSync(filepath,'utf-8');
+		console.log("content: "+content)
+		items=JSON.parse(content);				
+	}catch(e){
+		//si el fichero no existe
+		fs.openSync(filepath,'w');
+	}
+
+	items.push({
+		cod:codigo_modelo,
+		nombre:nombre_modelo
+	});
+
+	fs.writeFileSync(filepath,JSON.stringify(items,null,2));
+
+	tablaModelos();
+}
+
+
+/*
 function agregarAJSON(){
 	var jsonData;
 	fs.readFileSync('modelos.json','utf-8',function(err,data){
@@ -78,7 +140,7 @@ function agregarAJSON(){
 		}
 	});//se adquieren los datos hexadecimales del archivo  
 
-
+*/
 /*
 
 
@@ -102,9 +164,9 @@ function agregarAJSON(){
 	console.log("data+modelos: "+data);
 	//fs.writeFileSync('modelos.json',data);
 
-	*/
+	
 }
-
+*/
 
 
 
