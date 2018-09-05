@@ -1,0 +1,22 @@
+[
+  {
+    "cod": 1,
+    "cod_marca": "Toyota",
+    "nombre": "Yaris"
+  },
+  {
+    "cod": 2,
+    "cod_marca": "Mazda",
+    "nombre": "Mazda3"
+  },
+  {
+    "cod": 3,
+    "cod_marca": "BMW",
+    "nombre": "L200"
+  },
+  {
+    "cod": 4,
+    "cod_marca": "Mazda",
+    "nombre": "MOdelo 1"
+  }
+]

@@ -2,6 +2,8 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
+const MODE = "production";
+
 const {app, BrowserWindow,Menu}=electron;
 
 let mainWindow;
@@ -10,7 +12,7 @@ let addWindow;
 //saber cuando la aplicacion este lista
 app.on('ready',function(){
   //crear una nueva ventana
-  mainWindow=new BrowserWindow({});
+  mainWindow=new BrowserWindow({width:800,height:700});
   //cargar el html dentro de la ventana
   mainWindow.loadURL(url.format({
     pathname:path.join(__dirname,'index.html'),
@@ -76,7 +78,15 @@ const mainMenuTemplate=[
         label:'Modelos',
         click(){
           cambiarPagina("modelos.html");
-        }
+        },
+
+      },
+      {
+        label:'Clientes',
+        click(){
+          cambiarPagina("clientes.html");
+        },
+        
       },
       {
         label:'Salir',
@@ -95,7 +105,7 @@ if(process.platform=='darwin'){
 }
 
 //agregar herramientas para desarrollador si no esta en produccion la app
-if(process.env.NODE_ENV !== 'production'){
+if(MODE !== 'production'){
   mainMenuTemplate.push({
     label:'Herramientas de Desarrollador',
     submenu:[

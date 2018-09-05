@@ -26,5 +26,9 @@
   {
     "cod": 7,
     "nombre": "Dodge"
+  },
+  {
+    "cod": 8,
+    "nombre": "Marca 1"
   }
 ]

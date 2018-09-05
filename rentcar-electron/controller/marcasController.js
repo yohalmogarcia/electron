@@ -40,6 +40,22 @@ $("#btn-guardar").click(function(e){
 		}
 });
 
+//al hacer clic en el codigo de la marca
+$("#tabla-marcas").on('click','tbody td.sorting_1',function(){
+	codigoSeleccionado= this.innerHTML;//guardo el codigo seleccionado desde la tabla
+	var nombreMarca;
+	const data = fs.readFileSync(filepath,'utf-8');
+	var items = JSON.parse(data);
+	for(var i=0; i<items.length;i++){
+		if(items[i].cod == codigoSeleccionado){//busco el codigo en el json
+			nombreMarca=items[i].nombre;//al encontrarlo guardo el nombre del modelo seleccionado
+		}
+	}
+	
+	document.getElementById("nombre-marca").value=nombreMarca;// pongo el nombre del modelo en el input
+	document.getElementById("btn-guardar").innerHTML="Modificar";//modifico el texto del boton	
+});
+
 function mostrarTablaMarcas(){
 	const data = fs.readFileSync(filepath,'utf-8');
 	console.log("mostrarTabla");
@@ -89,22 +105,6 @@ function guardarMarca(){
 
 	mostrarTablaMarcas();
 }
-
-//al hacer clic en el codigo de la marca
-$("#tabla-marcas").on('click','tbody td.sorting_1',function(){
-	codigoSeleccionado= this.innerHTML;//guardo el codigo seleccionado desde la tabla
-	var nombreMarca;
-	const data = fs.readFileSync(filepath,'utf-8');
-	var items = JSON.parse(data);
-	for(var i=0; i<items.length;i++){
-		if(items[i].cod == codigoSeleccionado){//busco el codigo en el json
-			nombreMarca=items[i].nombre;//al encontrarlo guardo el nombre del modelo seleccionado
-		}
-	}
-	
-	document.getElementById("nombre-marca").value=nombreMarca;// pongo el nombre del modelo en el input
-	document.getElementById("btn-guardar").innerHTML="Modificar";//modifico el texto del boton	
-});
 
 function modificarMarca(){
 	const data = fs.readFileSync(filepath,'utf-8');
