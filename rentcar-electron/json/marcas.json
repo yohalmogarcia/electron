@@ -1,0 +1,30 @@
+[
+  {
+    "cod": 1,
+    "nombre": "Toyota"
+  },
+  {
+    "cod": 2,
+    "nombre": "Mazda"
+  },
+  {
+    "cod": 3,
+    "nombre": "BMW"
+  },
+  {
+    "cod": 4,
+    "nombre": "Mitsubishi"
+  },
+  {
+    "cod": 5,
+    "nombre": "Honda"
+  },
+  {
+    "cod": 6,
+    "nombre": "Audi"
+  },
+  {
+    "cod": 7,
+    "nombre": "Dodge"
+  }
+]

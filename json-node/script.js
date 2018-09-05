@@ -16,18 +16,37 @@ var codigoSeleccionad=0;
 $("#btn-modelo").click(function(e){
 		//si el boton tiene un texto de Guardar se agrega un nuevo modelo
 		if(document.getElementById("btn-modelo").innerHTML == 'Guardar'){
-			reescribirJSON();	
+			if(document.getElementById("nombre-modelo").value==""){
+				document.getElementById("mensaje").innerHTML="Debe rellenar el campo nombre.";
+			}else{
+				document.getElementById("mensaje").innerHTML="";
+				reescribirJSON();		
+			}
+			
 		}else{
 			// sino se modifica el modelo
+			document.getElementById("mensaje").innerHTML="";
 			modificarModelo();
 		}
 		
 	});
 
-	//esto sucede al precionar el boton ver tabla
+	//esto sucede al presionar el boton ver tabla
 	$("#btn-tabla-modelos").click(function(e){
 		tablaModelos();//manda a llamar a la funcion para ver la tabla
 	});
+
+//esto es al presionar el boton de nuevo
+//solo se limpia el textbox, se le asigan el valor de nuevo al boton
+//y se elimina el boton de NUEVO
+$("#btn-cancelar").click(function(e){
+	var btnModelo = document.getElementById("btn-modelo");
+	document.getElementById("nombre-modelo").value="";	
+	if(btnModelo.innerHTML=="Modificar"){
+		btnModelo.innerHTML="Guardar"
+	}
+	
+});
 
 
 //funcion para mostrar la tabla de modelos
@@ -66,7 +85,7 @@ $("#tabla-modelos").on('click','tbody td.sorting_1',function(){
 	}
 	
 	document.getElementById("nombre-modelo").value=nombreModelo;// pongo el nombre del modelo en el input
-	document.getElementById("btn-modelo").innerHTML="Modificar";//modifico el texto del boton
+	document.getElementById("btn-modelo").innerHTML="Modificar";//modifico el texto del boton	
 });
 
 //agregando nuevos registros al json

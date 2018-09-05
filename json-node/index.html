@@ -8,10 +8,15 @@
 	<h3>Formulario para los modelos - Prueba de escritura JSON</h3>
 	<form id="form-modelos">
 		<label for="nombre-modelo">Nombre del Modelo</label>
-		<input type="text" name="nombre-modelo" id="nombre-modelo" placeholder="Nombre de Modelo"><br>		
+		<input type="text" name="nombre-modelo" id="nombre-modelo" require placeholder="Nombre de Modelo"><br>		
 	</form>
-	<button id="btn-modelo">Guardar</button>
-	<button id="btn-tabla-modelos">Ver tabla</button>	
+	<span id="mensaje"></span><br />
+	<div id="botones">
+		<button id="btn-modelo">Guardar</button>
+		<button id="btn-tabla-modelos">Ver tabla</button>		
+		<button id="btn-cancelar">Cancelar</button>
+	</div>
+	
 	<br><br><br>
 	<table id="tabla-modelos">
 		<thead>

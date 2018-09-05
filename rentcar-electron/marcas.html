@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./css/bootstrap.css">
+        <link rel="stylesheet" href="./css/datatables.css">
+        <title>RENTCAR</title>
+    </head>
+    <body>
+    	<div class="container" style="margin.top:2%;">
+    		<div class="row">
+    			<div class="col-12">
+    				<div>
+    					<form>
+    						<div class="form-group">
+    							<label for="nombre-marca">Marca:</label>
+    							<input class="form-control" type="text" placeholder="Escriba el nombre de una marca y agreguela haciendo clic en el boton Guardar" name="nombre-marca" id="nombre-marca">
+    							<small class="text-muted">Escriba el nombre de una marca y agreguela haciendo clic en el boton Guardar, o haga clic en el codigo de una marca existente para modificarla</small>
+    						</div>
+    					</form>
+    					<div id="mensaje"></div>
+    					<div id="botones">
+    						<button class="btn btn-outline-primary" id="btn-guardar">Guardar</button>
+    						<button class="btn btn-outline-danger" id="btn-cancelar">Cancelar</button>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    		<hr />
+    		<div class="row">
+    			<div class="col-12">
+    				<table id="tabla-marcas" class="table table-hover">
+    					
+    				</table>
+    			</div>
+    		</div>
+    	</div>
+    	<script>
+    		require('./controller/marcasController.js');
+    	</script>
+    </body>
+</html>
